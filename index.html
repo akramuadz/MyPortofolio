@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Portfolio | Economics Student</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        neon: '#cc00ff',
+                        dark: '#0a0a0a',
+                        darker: '#050505',
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                        'glow': 'glow 2s ease-in-out infinite alternate',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-15px)' },
+                        },
+                        glow: {
+                            '0%': { 'box-shadow': '0 0 5px #cc00ff' },
+                            '100%': { 'box-shadow': '0 0 20px #cc00ff' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #0a0a0a;
+            color: white;
+            scroll-behavior: smooth;
+        }
+        
+        .timeline-item:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: -20px;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 20px;
+            background: linear-gradient(to bottom, #cc00ff, transparent);
+        }
+        
+        .skill-ball {
+            transition: all 0.3s ease;
+        }
+        
+        .skill-ball:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 15px #cc00ff;
+        }
+        
+        .project-bubble {
+            transition: all 0.3s ease;
+        }
+        
+        .project-bubble:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 20px rgba(204, 0, 255, 0.3);
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: #cc00ff;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(90deg, #cc00ff, #9900ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, #cc00ff, #9900ff);
+            margin: 10px auto;
+        }
+        
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #1a1a1a;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #cc00ff;
+            border-radius: 10px;
+        }
+        
+        .profile-img {
+            border: 3px solid #cc00ff;
+            box-shadow: 0 0 20px rgba(204, 0, 255, 0.5);
+        }
+        
+        .typewriter {
+            overflow: hidden;
+            border-right: 2px solid #cc00ff;
+            white-space: nowrap;
+            margin: 0 auto;
+            letter-spacing: 0.15em;
+            animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+        }
+        
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+        
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: #cc00ff; }
+        }
+        
+        .economic-pattern {
+            background-image: radial-gradient(circle, rgba(204, 0, 255, 0.05) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+    </style>
+</head>
+<body class="min-h-screen economic-pattern">
+    <!-- Navigation -->
+    <nav class="fixed w-full bg-darker bg-opacity-90 backdrop-blur-sm z-50 shadow-lg shadow-purple-900/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <span class="text-2xl font-bold gradient-text">ECONPORT</span>
+                    </div>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="#home" class="nav-link text-white px-3 py-2 text-sm font-medium">Home</a>
+                        <a href="#about" class="nav-link text-white px-3 py-2 text-sm font-medium">About</a>
+                        <a href="#education" class="nav-link text-white px-3 py-2 text-sm font-medium">Education</a>
+                        <a href="#skills" class="nav-link text-white px-3 py-2 text-sm font-medium">Skills</a>
+                        <a href="#projects" class="nav-link text-white px-3 py-2 text-sm font-medium">Projects</a>
+                        <a href="#contact" class="nav-link text-white px-3 py-2 text-sm font-medium">Contact</a>
+                    </div>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-white hover:text-neon focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-darker">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#home" class="block px-3 py-2 text-white hover:bg-neon hover:bg-opacity-10 rounded-md text-base font-medium">Home</a>
+                <a href="#about" class="block px-3 py-2 text-white hover:bg-neon hover:bg-opacity-10 rounded-md text-base font-medium">About</a>
+                <a href="#education" class="block px-3 py-2 text-white hover:bg-neon hover:bg-opacity-10 rounded-md text-base font-medium">Education</a>
+                <a href="#skills" class="block px-3 py-2 text-white hover:bg-neon hover:bg-opacity-10 rounded-md text-base font-medium">Skills</a>
+                <a href="#projects" class="block px-3 py-2 text-white hover:bg-neon hover:bg-opacity-10 rounded-md text-base font-medium">Projects</a>
+                <a href="#contact" class="block px-3 py-2 text-white hover:bg-neon hover:bg-opacity-10 rounded-md text-base font-medium">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center justify-center pt-16 bg-gradient-to-b from-darker to-dark">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-0">
+            <div class="flex flex-col md:flex-row items-center justify-between">
+                <div class="md:w-1/2 mb-10 md:mb-0 text-center md:text-left">
+                    <h1 class="text-4xl md:text-5xl font-bold mb-4">
+                        <span class="gradient-text">Hi, I'm</span> 
+                        <span class="text-white">[Your Name]</span>
+                    </h1>
+                    <h2 class="text-xl md:text-2xl mb-6 text-gray-300 typewriter">
+                        Future Economist & Data Enthusiast
+                    </h2>
+                    <p class="text-gray-400 mb-8 max-w-lg">
+                        A 20-year-old economics student passionate about understanding market dynamics, 
+                        economic theories, and how data analysis can reveal hidden patterns in our economy.
+                    </p>
+                    <div class="flex space-x-4 justify-center md:justify-start">
+                        <a href="#projects" class="px-6 py-3 bg-neon text-white rounded-full font-medium hover:bg-opacity-80 transition duration-300 shadow-lg shadow-purple-500/20">
+                            My Projects
+                        </a>
+                        <a href="#contact" class="px-6 py-3 border border-neon text-neon rounded-full font-medium hover:bg-neon hover:bg-opacity-10 transition duration-300">
+                            Let's Talk
+                        </a>
+                    </div>
+                </div>
+                <div class="md:w-1/2 flex justify-center">
+                    <div class="relative">
+                        <div class="w-64 h-64 md:w-72 md:h-72 rounded-full profile-img overflow-hidden float">
+                            <!-- Replace with your actual image -->
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80" 
+                                 alt="Profile" class="w-full h-full object-cover">
+                        </div>
+                        <div class="absolute -bottom-5 -right-5 bg-darker p-3 rounded-full border border-neon shadow-lg shadow-purple-500/20">
+                            <div class="w-14 h-14 bg-neon rounded-full flex items-center justify-center animate-pulse-slow">
+                                <i class="fas fa-chart-line text-2xl text-white"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-dark">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-white section-title">About Me</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto mt-4">
+                    Who I am and what drives me in economics and data analysis
+                </p>
+            </div>
+            
+            <div class="flex flex-col md:flex-row items-center gap-12">
+                <div class="md:w-1/3 flex justify-center">
+                    <div class="relative">
+                        <div class="w-64 h-64 rounded-2xl overflow-hidden border-2 border-neon shadow-lg shadow-purple-500/20">
+                            <!-- Replace with your actual image -->
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80" 
+                                 alt="About" class="w-full h-full object-cover">
+                        </div>
+                        <div class="absolute -bottom-5 -left-5 bg-darker p-4 rounded-xl border border-neon shadow-lg">
+                            <div class="flex items-center">
+                                <div class="w-10 h-10 bg-neon rounded-full flex items-center justify-center mr-3">
+                                    <i class="fas fa-heart text-white"></i>
+                                </div>
+                                <div>
+                                    <p class="text-white font-medium">Passionate</p>
+                                    <p class="text-gray-400 text-sm">Learner</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="md:w-2/3">
+                    <h3 class="text-2xl font-bold text-white mb-6">Economics & Data Explorer</h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                        <div class="bg-darker p-6 rounded-xl border border-gray-800 hover:border-neon transition duration-300">
+                            <div class="flex items-start mb-3">
+                                <div class="w-8 h-8 bg-neon bg-opacity-20 rounded-full flex items-center justify-center mr-3">
+                                    <i class="fas fa-brain text-neon"></i>
+                                </div>
+                                <h4 class="text-lg font-semibold text-white">Economic Thinking</h4>
+                            </div>
+                            <p class="text-gray-400">
+                                Fascinated by how economic principles shape our world, from individual decisions to global markets.
+                                Currently exploring behavioral economics and its applications in policy-making.
+                            </p>
+                        </div>
+                        
+                        <div class="bg-darker p-6 rounded-xl border border-gray-800 hover:border-neon transition duration-300">
+                            <div class="flex items-start mb-3">
+                                <div class="w-8 h-8 bg-neon bg-opacity-20 rounded-full flex items-center justify-center mr-3">
+                                    <i class="fas fa-laptop-code text-neon"></i>
+                                </div>
+                                <h4 class="text-lg font-semibold text-white">Data Curiosity</h4>
+                            </div>
+                            <p class="text-gray-400">
+                                Self-taught data analyst exploring how technology can enhance economic analysis.
+                                Learning Python, SQL, and data visualization tools to better understand economic patterns.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <p class="text-gray-400 mb-6">
+                        As a first-year economics student, I'm building my foundation in economic theory while developing 
+                        technical skills to analyze real-world data. My journey began with curiosity about market fluctuations 
+                        and has grown into a passion for understanding the numbers behind economic phenomena.
+                    </p>
+                    <p class="text-gray-400">
+                        Outside academics, I enjoy analyzing economic news, participating in case competitions, 
+                        and discussing economic ideas with peers. I believe the intersection of economics and technology 
+                        will be crucial for solving tomorrow's challenges.
+                    </p>
+                    
+                    <div class="mt-8">
+                        <a href="#education" class="inline-flex items-center text-neon font-medium hover:underline">
+                            View My Education Path <i class="fas fa-arrow-down ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Education Section -->
+    <section id="education" class="py-20 bg-darker">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-white section-title">Education Journey</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto mt-4">
+                    My academic path and continuous learning experiences
+                </p>
+            </div>
+            
+            <div class="relative">
+                <!-- Timeline -->
+                <div class="space-y-12 md:space-y-0 md:grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Elementary -->
+                    <div class="timeline-item relative text-center">
+                        <div class="w-20 h-20 mx-auto bg-neon rounded-full flex items-center justify-center mb-4">
+                            <i class="fas fa-school text-2xl text-white"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">Elementary School</h3>
+                        <p class="text-gray-400 mb-2">[School Name]</p>
+                        <p class="text-neon font-medium">2009 - 2015</p>
+                        <p class="text-gray-400 mt-3 px-4">Built foundational knowledge and discovered my love for problem-solving.</p>
+                    </div>
+                    
+                    <!-- Middle School -->
+                    <div class="timeline-item relative text-center">
+                        <div class="w-20 h-20 mx-auto bg-neon rounded-full flex items-center justify-center mb-4">
+                            <i class="fas fa-book text-2xl text-white"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">Middle School</h3>
+                        <p class="text-gray-400 mb-2">[School Name]</p>
+                        <p class="text-neon font-medium">2015 - 2018</p>
+                        <p class="text-gray-400 mt-3 px-4">Developed analytical skills and began exploring social sciences.</p>
+                    </div>
+                    
+                    <!-- High School -->
+                    <div class="timeline-item relative text-center">
+                        <div class="w-20 h-20 mx-auto bg-neon rounded-full flex items-center justify-center mb-4">
+                            <i class="fas fa-graduation-cap text-2xl text-white"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">High School</h3>
+                        <p class="text-gray-400 mb-2">[School Name]</p>
+                        <p class="text-neon font-medium">2018 - 2021</p>
+                        <p class="text-gray-400 mt-3 px-4">Specialized in social sciences with focus on economics and developed interest in data analysis.</p>
+                    </div>
+                </div>
+                
+                <!-- University -->
+                <div class="mt-16 bg-dark p-8 rounded-xl border border-neon max-w-2xl mx-auto relative overflow-hidden">
+                    <div class="absolute -top-10 -right-10 w-32 h-32 bg-neon rounded-full opacity-10"></div>
+                    <div class="flex flex-col md:flex-row items-center">
+                        <div class="md:w-1/3 mb-6 md:mb-0 flex justify-center">
+                            <div class="w-24 h-24 bg-neon bg-opacity-20 rounded-full flex items-center justify-center border border-neon animate-glow">
+                                <i class="fas fa-university text-3xl text-neon"></i>
+                            </div>
+                        </div>
+                        <div class="md:w-2/3 text-center md:text-left">
+                            <h3 class="text-2xl font-bold text-white mb-2">Bachelor's in Economics</h3>
+                            <p class="text-neon font-medium">2023 - Present</p>
+                            <p class="text-gray-400 mt-3">
+                                Currently pursuing my degree in Economics at [University Name], focusing on econometrics, 
+                                economic theory, and data analysis applications in economics.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Additional Learning -->
+                <div class="mt-16">
+                    <h3 class="text-2xl font-bold text-white mb-8 text-center">Self-Directed Learning</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+                        <div class="bg-dark p-6 rounded-lg border border-gray-700 hover:border-neon transition duration-300">
+                            <div class="w-12 h-12 bg-neon bg-opacity-20 rounded-full flex items-center justify-center mb-4 mx-auto">
+                                <i class="fas fa-chart-line text-neon"></i>
+                            </div>
+                            <h4 class="text-lg font-semibold text-white text-center mb-2">Economic Fundamentals</h4>
+                            <p class="text-gray-400 text-center text-sm">
+                                Completed online courses in micro/macro economics, game theory, and behavioral economics.
+                            </p>
+                        </div>
+                        <div class="bg-dark p-6 rounded-lg border border-gray-700 hover:border-neon transition duration-300">
+                            <div class="w-12 h-12 bg-neon bg-opacity-20 rounded-full flex items-center justify-center mb-4 mx-auto">
+                                <i class="fab fa-python text-neon"></i>
+                            </div>
+                            <h4 class="text-lg font-semibold text-white text-center mb-2">Python for Economics</h4>
+                            <p class="text-gray-400 text-center text-sm">
+                                Learned Python programming focused on economic modeling and data analysis.
+                            </p>
+                        </div>
+                        <div class="bg-dark p-6 rounded-lg border border-gray-700 hover:border-neon transition duration-300">
+                            <div class="w-12 h-12 bg-neon bg-opacity-20 rounded-full flex items-center justify-center mb-4 mx-auto">
+                                <i class="fas fa-database text-neon"></i>
+                            </div>
+                            <h4 class="text-lg font-semibold text-white text-center mb-2">Data Visualization</h4>
+                            <p class="text-gray-400 text-center text-sm">
+                                Developed skills in presenting economic data through compelling visualizations.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-20 bg-dark">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-white section-title">My Skills</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto mt-4">
+                    The tools and knowledge I'm developing to analyze economic problems
+                </p>
+            </div>
+            
+            <div class="relative">
+                <!-- Dragon Ball Z Inspired Skill Balls -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-3xl mx-auto">
+                    <!-- Economic Theory -->
+                    <div class="skill-ball-container flex flex-col items-center">
+                        <div class="relative mb-4">
+                            <div class="w-20 h-20 rounded-full bg-gradient-to-br from-purple-900 to-neon flex items-center justify-center skill-ball">
+                                <i class="fas fa-chart-bar text-3xl text-white"></i>
+                            </div>
+                            <div class="absolute -top-2 -right-2 w-6 h-6 bg-neon rounded-full animate-pulse-slow"></div>
+                        </div>
+                        <h3 class="text-white font-medium text-center">Economic Theory</h3>
+                        <div class="w-full bg-gray-800 rounded-full h-1.5 mt-2">
+                            <div class="bg-neon h-1.5 rounded-full" style="width: 75%"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Data Analysis -->
+                    <div class="skill-ball-container flex flex-col items-center">
+                        <div class="relative mb-4">
+                            <div class="w-20 h-20 rounded-full bg-gradient-to-br from-purple-900 to-neon flex items-center justify-center skill-ball">
+                                <i class="fas fa-chart-pie text-3xl text-white"></i>
+                            </div>
+                            <div class="absolute -top-2 -right-2 w-6 h-6 bg-neon rounded-full animate-pulse-slow"></div>
+                        </div>
+                        <h3 class="text-white font-medium text-center">Data Analysis</h3>
+                        <div class="w-full bg-gray-800 rounded-full h-1.5 mt-2">
+                            <div class="bg-neon h-1.5 rounded-full" style="width: 70%"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Python -->
+                    <div class="skill-ball-container flex flex-col items-center">
+                        <div class="relative mb-4">
+                            <div class="w-20 h-20 rounded-full bg-gradient-to-br from-purple-900 to-neon flex items-center justify-center skill-ball">
+                                <i class="fab fa-python text-3xl text-white"></i>
+                            </div>
+                            <div class="absolute -top-2 -right-2 w-6 h-6 bg-neon rounded-full animate-pulse-slow"></div>
+                        </div>
+                        <h3 class="text-white font-medium text-center">Python</h3>
+                        <div class="w-full bg-gray-800 rounded-full h-1.5 mt-2">
+                            <div class="bg-neon h-1.5 rounded-full" style="width: 65%"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Research -->
+                    <div class="skill-ball-container flex flex-col items-center">
+                        <div class="relative mb-4">
+                            <div class="w-20 h-20 rounded-full bg-gradient-to-br from-purple-900 to-neon flex items-center justify-center skill-ball">
+                                <i class="fas fa-search text-3xl text-white"></i>
+                            </div>
+                            <div class="absolute -top-2 -right-2 w-6 h-6 bg-neon rounded-full animate-pulse-slow"></div>
+                        </div>
+                        <h3 class="text-white font-medium text-center">Research</h3>
+                        <div class="w-full bg-gray-800 rounded-full h-1.5 mt-2">
+                            <div class="bg-neon h-1.5 rounded-full" style="width: 80%"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Additional Skills -->
+                <div class="mt-16">
+                    <h3 class="text-2xl font-bold text-white mb-8 text-center">Developing Skills</h3>
+                    <div class="flex flex-wrap justify-center gap-4 max-w-3xl mx-auto">
+                        <div class="px-4 py-2 bg-darker rounded-full border border-gray-700 text-white hover:border-neon transition duration-300">
+                            <span class="flex items-center">
+                                <i class="fas fa-file-excel text-neon mr-2"></i> Excel
+                            </span>
+                        </div>
+                        <div class="px-4 py-2 bg-darker rounded-full border border-gray-700 text-white hover:border-neon transition duration-300">
+                            <span class="flex items-center">
+                                <i class="fas fa-database text-neon mr-2"></i> SQL Basics
+                            </span>
+                        </div>
+                        <div class="px-4 py-2 bg-darker rounded-full border border-gray-700 text-white hover:border-neon transition duration-300">
+                            <span class="flex items-center">
+                                <i class="fab fa-html5 text-neon mr-2"></i> HTML/CSS
+                            </span>
+                        </div>
+                        <div class="px-4 py-2 bg-darker rounded-full border border-gray-700 text-white hover:border-neon transition duration-300">
+                            <span class="flex items-center">
+                                <i class="fas fa-book text-neon mr-2"></i> Academic Writing
+                            </span>
+                        </div>
+                        <div class="px-4 py-2 bg-darker rounded-full border border-gray-700 text-white hover:border-neon transition duration-300">
+                            <span class="flex items-center">
+                                <i class="fas fa-chart-line text-neon mr-2"></i> Statistics
+                            </span>
+                        </div>
+                        <div class="px-4 py-2 bg-darker rounded-full border border-gray-700 text-white hover:border-neon transition duration-300">
+                            <span class="flex items-center">
+                                <i class="fas fa-lightbulb text-neon mr-2"></i> Critical Thinking
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center mt-12">
+                        <p class="text-gray-400 max-w-2xl mx-auto">
+                            I'm continuously expanding my skill set through university courses, online learning, 
+                            and personal projects. Excited to develop these further throughout my academic journey!
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-20 bg-darker">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-white section-title">My Projects</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto mt-4">
+                    Explorations at the intersection of economics and data analysis
+                </p>
+            </div>
+            
+            <!-- Crypto Bubble Inspired Projects -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Project 1 -->
+                <div class="project-bubble bg-dark rounded-xl p-6 border border-gray-800 hover:border-neon transition duration-300 relative overflow-hidden group">
+                    <div class="absolute -top-10 -right-10 w-32 h-32 bg-neon rounded-full opacity-10 group-hover:opacity-20 transition duration-500"></div>
+                    <div class="flex items-center mb-6">
+                        <div class="w-14 h-14 bg-neon bg-opacity-20 rounded-xl flex items-center justify-center mr-4">
+                            <i class="fas fa-chart-line text-neon text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">Inflation Analysis</h3>
+                    </div>
+                    <p class="text-gray-400 mb-6">
+                        Analyzed local inflation data using Python to identify patterns and potential causes.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-6">
+                        <span class="px-3 py-1 bg-darker rounded-full text-xs text-neon border border-neon">Python</span>
+                        <span class="px-3 py-1 bg-darker rounded-full text-xs text-neon border border-neon">Pandas</span>
+                        <span class="px-3 py-1 bg-darker rounded-full text-xs text-neon border border-neon">Matplotlib</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <a href="#" class="text-neon font-medium hover:underline flex items-center">
+                            View Details <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Project 2 -->
+                <div class="project-bubble bg-dark rounded-xl p-6 border border-gray-800 hover:border-neon transition duration-300 relative overflow-hidden group">
+                    <div class="absolute -top-10 -right-10 w-32 h-32 bg-neon rounded-full opacity-10 group-hover:opacity-20 transition duration-500"></div>
+                    <div class="flex items-center mb-6">
+                        <div class="w-14 h-14 bg-neon bg-opacity-20 rounded-xl flex items-center justify-center mr-4">
+                            <i class="fas fa-blog text-neon text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">Econ Blog</h3>
+                    </div>
+                    <p class="text-gray-400 mb-6">
+                        Personal blog where I break down economic concepts and current events for beginners.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-6">
+                        <span class="px-3 py-1 bg-darker rounded-full text-xs text-neon border border-neon">Writing</span>
+                        <span class="px-3 py-1 bg-darker rounded-full text-xs text-neon border border-neon">Research</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <a href="#" class="text-neon font-medium hover:underline flex items-center">
+                            Read Blog <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Project 3 -->
+                <div class="project-bubble bg-dark rounded-xl p-6 border border-gray-800 hover:border-neon transition duration-300 relative overflow-hidden group">
+                    <div class="absolute -top-10 -right-10 w-32 h-32 bg-neon rounded-full opacity-10 group-hover:opacity-20 transition duration-500"></div>
+                    <div class="flex items-center mb-6">
+                        <div class="w-14 h-14 bg-neon bg-opacity-20 rounded-xl flex items-center justify-center mr-4">
+                            <i class="fas fa-gamepad text-neon text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">Market Simulator</h3>
+                    </div>
+                    <p class="text-gray-400 mb-6">
+                        Simple browser-based game demonstrating basic economic principles like supply and demand.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-6">
+                        <span class="px-3 py-1 bg-darker rounded-full text-xs text-neon border border-neon">JavaScript</span>
+                        <span class="px-3 py-1 bg-darker rounded-full text-xs text-neon border border-neon">HTML5</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <a href="#" class="text-neon font-medium hover:underline flex items-center">
+                            Try It Out <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Project 4 -->
+                <div class="project-bubble bg-dark rounded-xl p-6 border border-gray-800 hover:border-neon transition duration-300 relative overflow-hidden group">
+                    <div class="absolute -top-10 -right-10 w-32 h-32 bg-neon rounded-full opacity-10 group-hover:opacity-20 transition duration-500"></div>
+                    <div class="flex items-center mb-6">
+                        <div class="w-14 h-14 bg-neon bg-opacity-20 rounded-xl flex items-center justify-center mr-4">
+                            <i class="fas fa-book text-neon text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">Study Notes</h3>
+                    </div>
+                    <p class="text-gray-400 mb-6">
+                        Organized digital notes from economic books and courses I've completed.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-6">
+                        <span class="px-3 py-1 bg-darker rounded-full text-xs text-neon border border-neon">Notion</span>
+                        <span class="px-3 py-1 bg-darker rounded-full text-xs text-neon border border-neon">Research</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <a href="#" class="text-neon font-medium hover:underline flex items-center">
+                            View Samples <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Project 5 -->
+                <div class="project-bubble bg-dark rounded-xl p-6 border border-gray-800 hover:border-neon transition duration-300 relative overflow-hidden group">
+                    <div class="absolute -top-10 -right-10 w-32 h-32 bg-neon rounded-full opacity-10 group-hover:opacity-20 transition duration-500"></div>
+                    <div class="flex items-center mb-6">
+                        <div class="w-14 h-14 bg-neon bg-opacity-20 rounded-xl flex items-center justify-center mr-4">
+                            <i class="fas fa-chart-bar text-neon text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">Personal Finance Tracker</h3>
+                    </div>
+                    <p class="text-gray-400 mb-6">
+                        Basic application to track expenses and visualize spending patterns.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-6">
+                        <span class="px-3 py-1 bg-darker rounded-full text-xs text-neon border border-neon">Python</span>
+                        <span class="px-3 py-1 bg-darker rounded-full text-xs text-neon border border-neon">Tkinter</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <a href="#" class="text-neon font-medium hover:underline flex items-center">
+                            See Code <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Project 6 -->
+                <div class="project-bubble bg-dark rounded-xl p-6 border border-gray-800 hover:border-neon transition duration-300 relative overflow-hidden group">
+                    <div class="absolute -top-10 -right-10 w-32 h-32 bg-neon rounded-full opacity-10 group-hover:opacity-20 transition duration-500"></div>
+                    <div class="flex items-center mb-6">
+                        <div class="w-14 h-14 bg-neon bg-opacity-20 rounded-xl flex items-center justify-center mr-4">
+                            <i class="fas fa-users text-neon text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">Study Group</h3>
+                    </div>
+                    <p class="text-gray-400 mb-6">
+                        Organized university economics study group to discuss concepts and analyze case studies.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-6">
+                        <span class="px-3 py-1 bg-darker rounded-full text-xs text-neon border border-neon">Leadership</span>
+                        <span class="px-3 py-1 bg-darker rounded-full text-xs text-neon border border-neon">Education</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <a href="#" class="text-neon font-medium hover:underline flex items-center">
+                            Learn More <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-16">
+                <p class="text-gray-400 max-w-2xl mx-auto mb-6">
+                    These projects represent my learning journey so far. I'm excited to undertake more sophisticated 
+                    work as I progress through my university studies and continue developing my skills.
+                </p>
+                <a href="#contact" class="px-6 py-3 bg-neon text-white rounded-lg font-medium hover:bg-opacity-80 transition duration-300 shadow-lg shadow-purple-500/20 inline-flex items-center">
+                    Discuss Potential Projects <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-dark">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-white section-title">Get In Touch</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto mt-4">
+                    I'm open to discussions about economics, potential collaborations, or just chatting about ideas
+                </p>
+            </div>
+            
+            <div class="flex flex-col md:flex-row gap-12">
+                <div class="md:w-1/2">
+                    <h3 class="text-2xl font-bold text-white mb-6">Contact Information</h3>
+                    <p class="text-gray-400 mb-8">
+                        Whether you have advice for an economics student, want to discuss an idea, or just want to connect, 
+                        feel free to reach out. I'm always eager to learn from others in the field.
+                    </p>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-start">
+                            <div class="w-10 h-10 bg-neon bg-opacity-20 rounded-full flex items-center justify-center mr-4 mt-1">
+                                <i class="fas fa-envelope text-neon"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-semibold text-white mb-1">Email</h4>
+                                <a href="mailto:your.email@example.com" class="text-gray-400 hover:text-neon transition duration-300">your.email@example.com</a>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="w-10 h-10 bg-neon bg-opacity-20 rounded-full flex items-center justify-center mr-4 mt-1">
+                                <i class="fab fa-whatsapp text-neon"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-semibold text-white mb-1">WhatsApp</h4>
+                                <a href="https://wa.me/6281234567890" class="text-gray-400 hover:text-neon transition duration-300">+62 812-3456-7890</a>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="w-10 h-10 bg-neon bg-opacity-20 rounded-full flex items-center justify-center mr-4 mt-1">
+                                <i class="fas fa-map-marker-alt text-neon"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-semibold text-white mb-1">Location</h4>
+                                <p class="text-gray-400">Jakarta, Indonesia</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-10">
+                        <h4 class="text-lg font-semibold text-white mb-4">Connect With Me</h4>
+                        <div class="flex space-x-4">
+                            <a href="#" class="w-12 h-12 bg-darker rounded-full flex items-center justify-center border border-gray-700 hover:border-neon hover:bg-neon hover:bg-opacity-10 transition duration-300">
+                                <i class="fab fa-linkedin-in text-neon text-xl"></i>
+                            </a>
+                            <a href="#" class="w-12 h-12 bg-darker rounded-full flex items-center justify-center border border-gray-700 hover:border-neon hover:bg-neon hover:bg-opacity-10 transition duration-300">
+                                <i class="fab fa-github text-neon text-xl"></i>
+                            </a>
+                            <a href="#" class="w-12 h-12 bg-darker rounded-full flex items-center justify-center border border-gray-700 hover:border-neon hover:bg-neon hover:bg-opacity-10 transition duration-300">
+                                <i class="fab fa-twitter text-neon text-xl"></i>
+                            </a>
+                            <a href="#" class="w-12 h-12 bg-darker rounded-full flex items-center justify-center border border-gray-700 hover:border-neon hover:bg-neon hover:bg-opacity-10 transition duration-300">
+                                <i class="fab fa-instagram text-neon text-xl"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="md:w-1/2">
+                    <form class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="name" class="block text-sm font-medium text-gray-300 mb-1">Your Name</label>
+                                <input type="text" id="name" class="w-full bg-darker border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-neon transition duration-300" placeholder="John Doe">
+                            </div>
+                            <div>
+                                <label for="email" class="block text-sm font-medium text-gray-300 mb-1">Your Email</label>
+                                <input type="email" id="email" class="w-full bg-darker border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-neon transition duration-300" placeholder="john@example.com">
+                            </div>
+                        </div>
+                        <div>
+                            <label for="subject" class="block text-sm font-medium text-gray-300 mb-1">Subject</label>
+                            <input type="text" id="subject" class="w-full bg-darker border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-neon transition duration-300" placeholder="What would you like to discuss?">
+                        </div>
+                        <div>
+                            <label for="message" class="block text-sm font-medium text-gray-300 mb-1">Message</label>
+                            <textarea id="message" rows="5" class="w-full bg-darker border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-neon transition duration-300" placeholder="Your message here..."></textarea>
+                        </div>
+                        <button type="submit" class="w-full px-6 py-3 bg-neon text-white rounded-lg font-medium hover:bg-opacity-80 transition duration-300 shadow-lg shadow-purple-500/20">
+                            Send Message <i class="fas fa-paper-plane ml-2"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-darker py-12 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-6 md:mb-0">
+                    <span class="text-2xl font-bold gradient-text">ECONPORT</span>
+                    <p class="text-gray-400 mt-2">Exploring economics through data and technology</p>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-neon transition duration-300">
+                        <i class="fab fa-linkedin-in text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-neon transition duration-300">
+                        <i class="fab fa-github text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-neon transition duration-300">
+                        <i class="fab fa-twitter text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-neon transition duration-300">
+                        <i class="fab fa-instagram text-xl"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="mt-12 pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 text-sm mb-4 md:mb-0">© 2023 [Your Name]. All rights reserved.</p>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-neon text-sm transition duration-300">Privacy</a>
+                    <a href="#" class="text-gray-400 hover:text-neon text-sm transition duration-300">Terms</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="fixed bottom-8 right-8 w-12 h-12 bg-neon rounded-full flex items-center justify-center text-white shadow-lg shadow-purple-500/30 opacity-0 invisible transition-all duration-300">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                window.scrollTo({
+                    top: targetElement.offsetTop - 80,
+                    behavior: 'smooth'
+                });
+                
+                // Close mobile menu if open
+                const mobileMenu = document.getElementById('mobile-menu');
+                if (!mobileMenu.classList.contains('hidden')) {
+                    mobileMenu.classList.add('hidden');
+                }
+            });
+        });
+
+        // Back to top button
+        const backToTopButton = document.getElementById('back-to-top');
+        
+        window.addEventListener('scroll', function() {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.remove('opacity-0', 'invisible');
+                backToTopButton.classList.add('opacity-100', 'visible');
+            } else {
+                backToTopButton.classList.remove('opacity-100', 'visible');
+                backToTopButton.classList.add('opacity-0', 'invisible');
+            }
+        });
+        
+        backToTopButton.addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Skill balls animation
+        const skillBalls = document.querySelectorAll('.skill-ball');
+        
+        skillBalls.forEach(ball => {
+            ball.addEventListener('mouseenter', function() {
+                this.style.transform = 'scale(1.1)';
+                this.style.boxShadow = '0 0 15px #cc00ff';
+            });
+            
+            ball.addEventListener('mouseleave', function() {
+                this.style.transform = 'scale(1)';
+                this.style.boxShadow = 'none';
+            });
+        });
+
+        // Project bubbles animation
+        const projectBubbles = document.querySelectorAll('.project-bubble');
+        
+        projectBubbles.forEach(bubble => {
+            bubble.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-8px)';
+                this.style.boxShadow = '0 8px 20px rgba(204, 0, 255, 0.3)';
+            });
+            
+            bubble.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+                this.style.boxShadow = 'none';
+            });
+        });
+
+        // Nav link animation on scroll
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.nav-link');
+        
+        window.addEventListener('scroll', function() {
+            let current = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                
+                if (pageYOffset >= sectionTop - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('text-neon');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('text-neon');
+                }
+            });
+        });
+
+        // Form submission
+        const contactForm = document.querySelector('form');
+        if (contactForm) {
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('Thank you for your message! I will get back to you soon.');
+                this.reset();
+            });
+        }
+    </script>
+</body>
+</html>
